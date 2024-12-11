@@ -2,6 +2,7 @@ package stepDefinations;
 
 import static io.restassured.RestAssured.given;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.*;
@@ -29,7 +30,7 @@ public class StepDefination extends Utils {
     TestDataBuild data = new TestDataBuild();
 
     @Given("Add Place Payload")
-    public void add_place_payload() {
+    public void add_place_payload() throws IOException {
         // Write code here that turns the phrase above into concrete actions
 
 
@@ -42,6 +43,7 @@ public class StepDefination extends Utils {
     @When("user calls {string} with Post http request")
     public void user_calls_add_place_api_with_post_http_request(String string) {
         // Write code here that turns the phrase above into concrete actions
+        resspec =new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
         response = res.when().post("/maps/api/place/add/json")
                 .then().spec(resspec).extract().response();
     }
